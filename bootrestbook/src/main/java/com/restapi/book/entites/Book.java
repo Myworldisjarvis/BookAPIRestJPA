@@ -1,9 +1,13 @@
 package com.restapi.book.entites;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,8 +18,13 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int bookId;
 	private String title;
-	private String author;
-	public Book(int bookId, String title, String author) {
+	
+	 @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	 @JsonManagedReference
+	private Author author;
+	
+	
+	public Book(int bookId, String title, Author author) {
 		super();
 		this.bookId = bookId;
 		this.title = title;
@@ -33,10 +42,10 @@ public class Book {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getAuthor() {
+	public Author getAuthor() {
 		return author;
 	}
-	public void setAuthor(String author) {
+	public void setAuthor(Author author) {
 		this.author = author;
 	}
 	public Book() {
