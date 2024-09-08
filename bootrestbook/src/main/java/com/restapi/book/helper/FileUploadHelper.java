@@ -2,12 +2,14 @@ package com.restapi.book.helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.convert.Jsr310Converters.ZoneIdToStringConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,8 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileUploadHelper {
 
-	public final String UPLOAD_DIR = "C:\\Users\\names\\git\\BookAPIRestJPA\\bootrestbook\\src\\main\\resources\\static\\image";
-
+	//static
+//	public final String UPLOAD_DIR = "C:\\Users\\names\\git\\BookAPIRestJPA\\bootrestbook\\src\\main\\resources\\static\\image";
+	
+	//dynamic
+	public final String UPLOAD_DIR = new ClassPathResource("static/image/").getFile().getAbsolutePath();
+	public FileUploadHelper()throws IOException{ 
+		
+	}
+	
 	public boolean uploadFile(MultipartFile file) {
 		boolean b = false;
 
